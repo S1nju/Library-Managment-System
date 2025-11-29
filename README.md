@@ -21,22 +21,22 @@ To run this project you need :
 - Composer .
 - install the yajra/laravel-oci8 package.
 
-**Setting up the Database**
-You need to create a specific roles and sysnonyms before you  run this project 
--**ROLE** `CREATE ROLE shared_schema;`.
--**privileges** `GRANT SELECT , INSERT ,UPDATE,DELETE ON YOUR_MAIN_SCHEMA.personal_access_tokens to shared_schema;`
-`GRANT SELECT ON YOUR_MAIN_SCHEMA.PERMISSIONS to shared_schema;`.
--**SYNONYMS** `create public synonym PERSONAL_ACCESS_TOKENS for YOUR_MAIN_SCHEMA.PERSONAL_ACCESS_TOKENS;`
- `create public synonym users for YOUR_MAIN_SCHEMA.users;`
- `create public synonym sessions for YOUR_MAIN_SCHEMA.sessions;`
- `create public synonym PERMISSIONS for YOUR_MAIN_SCHEMA.PERMISSIONS;`
- `create public synonym etudiants for YOUR_MAIN_SCHEMA.etudiants;`.
- ` create public synonym personnels for YOUR_MAIN_SCHEMA.personnels;`
- ` create public synonym livres for YOUR_MAIN_SCHEMA.livres;`
- ` create public synonym emprunts for YOUR_MAIN_SCHEMA.emprunts;`
-  `create public synonym retards for YOUR_MAIN_SCHEMA.retards;`
- ` create public synonym detail_emprunts for YOUR_MAIN_SCHEMA.detail_emprunts;`
-**Setting up the Laravel Project**
+## Setting up the Database
+You need to create a specific roles and sysnonyms before you  run this project:
+- **ROLE** `CREATE ROLE shared_schema;`.
+- **privileges** `GRANT SELECT , INSERT ,UPDATE,DELETE ON YOUR_MAIN_SCHEMA.personal_access_tokens to shared_schema;`.
+`GRANT SELECT ON YOUR_MAIN_SCHEMA.PERMISSIONS to shared_schema;`..
+- **SYNONYMS** `create public synonym PERSONAL_ACCESS_TOKENS for YOUR_MAIN_SCHEMA..PERSONAL_ACCESS_TOKENS;`.
+ - `create public synonym users for YOUR_MAIN_SCHEMA.users;`.
+ - `create public synonym sessions for YOUR_MAIN_SCHEMA.sessions;`.
+ - `create public synonym PERMISSIONS for YOUR_MAIN_SCHEMA.PERMISSIONS;`.
+ - `create public synonym etudiants for YOUR_MAIN_SCHEMA.etudiants;`.
+ - ` create public synonym personnels for YOUR_MAIN_SCHEMA.personnels;`.
+ - ` create public synonym livres for YOUR_MAIN_SCHEMA.livres;`.
+ - ` create public synonym emprunts for YOUR_MAIN_SCHEMA.emprunts;`.
+ -  `create public synonym retards for YOUR_MAIN_SCHEMA.retards;`.
+ - ` create public synonym detail_emprunts for YOUR_MAIN_SCHEMA.detail_emprunts;`.
+## Setting up the Laravel Project
 - put your dbhost and password in the .env file
 - run `php artisan migrate`
 - run `php artisan serve`
