@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RETARD;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RetardController extends Controller
 {
@@ -11,8 +12,18 @@ class RetardController extends Controller
      * @group Retards
      * Get a list of retards.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->query('search');
+        $query = RETARD::query();
+        
+        if($search){
+           $etudiant_ids = DB::table('etudiants')->where('nom', 'like', "%{$search}%")->pluck('id');
+           $query->whereIn('etudiant_id', $etudiant_ids);
+            $query->where(function($q) use ($search) {
+                $q->where('etudiant_id', 'like', "%{$search}%");
+            });
+        }
         return response()->json(RETARD::paginate(10), 200);
     }
     /**
@@ -26,14 +37,29 @@ class RetardController extends Controller
         }
         return response()->json(RETARD::find($id), 200);
     }
-    /**
-     * @group Retards
-     * Create a new retard.
-     *
-     * @bodyParam emprunt_id 
-     * 
-     *
-     */
+  /**
+ * @group Retards
+ * Create a new retard.
+ *
+ * @bodyParam emprunt_id integer required The ID of the emprunt. Example: 1
+ * @bodyParam date_retard date required The date of the retard (YYYY-MM-DD). Example: 2025-12-01
+ * @bodyParam montant number required The amount of the retard. Example: 50.00
+ *
+ * @response 201 {
+ *   "id": 1,
+ *   "emprunt_id": 1,
+ *   "date_retard": "2025-12-01",
+ *   "montant": 50.00,
+ *   "created_at": "2025-12-01T12:00:00.000000Z",
+ *   "updated_at": "2025-12-01T12:00:00.000000Z"
+ * }
+ * @response 400 {
+ *   "message": "details_emprunt is required"
+ * }
+ * @response 500 {
+ *   "message": "Failed to create retard"
+ * }
+ */
     public function store(Request $request)
     {
         $request->validate([
@@ -50,7 +76,28 @@ class RetardController extends Controller
         }
     }
 
-    
+/**
+     * @group Retards
+     * Update a specific retard.
+     *
+     * @urlParam id integer required The ID of the retard. Example: 1
+     * @bodyParam emprunt_id integer The ID of the emprunt. Example: 1
+     * @bodyParam date_retard date The date of the retard (YYYY-MM-DD). Example: 2025-12-01
+     * @bodyParam montant number The amount of the retard. Example: 50.00
+     *
+     * @response 200 {
+     *   "id": 1,
+     *   "emprunt_id": 1,
+     *   "date_retard": "2025-12-01",
+     *   "montant": 60.00,
+     *   "created_at": "2025-12-01T12:00:00.000000Z",
+     *   "updated_at": "2025-12-02T12:00:00.000000Z"
+     * }
+     * @response 404 {
+     *   "message": "Retard not found"
+     * }
+     */
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -65,6 +112,19 @@ class RetardController extends Controller
         $retard->update($request->all());
         return response()->json($retard, 200);
     }
+     /**
+     * @group Retards
+     * Delete a specific retard.
+     *
+     * @urlParam id integer required The ID of the retard. Example: 1
+     *
+     * @response 200 {
+     *   "message": "Retard deleted successfully"
+     * }
+     * @response 404 {
+     *   "message": "Retard not found"
+     * }
+     */
     public function destroy($id)
     {
         if(!RETARD::where('id', $id)->exists()){

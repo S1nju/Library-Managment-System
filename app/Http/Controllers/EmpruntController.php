@@ -6,7 +6,7 @@ use App\Models\DETAIL_EMPRUNT;
 use App\Models\EMPRUNT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class EmpruntController extends Controller
 {
@@ -18,10 +18,34 @@ class EmpruntController extends Controller
  * @queryParam page int optional The page number.
  * @queryParam per_page int optional The number of items per page.
  */
-    public function index()
+    public function index(Request $request)
     {
+        $etudiant  = $request->query('etudiant');  
+        $date = $request->query('date');
+        $query = EMPRUNT::query();
+        if ($date) {
+            try {
+                $query->whereDate('created_at', $date);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'Failed to filter emprunts by date',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        }
+        if ($etudiant) {
+            try {
+            $etudiant_id = DB::table('etudiants')->where('nom', 'like', "%{$etudiant}%")->pluck('id');
+            $query->where('etudiant_id', $etudiant_id);   
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'Failed to filter emprunts by etudiant',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        }
 
-        return EMPRUNT::with('details')->paginate(10);
+        return response()->json($query->with('details')->paginate(10), 200);
     }
     public function show($id)
     {
@@ -31,7 +55,7 @@ class EmpruntController extends Controller
         return EMPRUNT::with('details')->find($id);
     }
 
-          /**
+/**
  * @group Emprunts
  * Create a new emprunt.
  *
@@ -90,7 +114,7 @@ class EmpruntController extends Controller
         }
     }
 
-              /**
+/**
  * @group Emprunts
  * Update an existing emprunt.
  *

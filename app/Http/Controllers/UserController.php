@@ -12,10 +12,18 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     //
+    /**
+     * @group Users
+     * Get a list of users.
+     */
     public function index()
     {
-       return response()->json(['users' => User::all()], 200);
+        return response()->json(['users' => User::all()], 200);
     }
+    /**
+     * @group Users
+     * Get a specific user.
+     */
     public function show($id)
     {
         $user = User::find($id);
@@ -40,6 +48,15 @@ class UserController extends Controller
 
         return response()->json(['user' => $user], 201);
     }
+    /**
+     * @group Users
+     * Update a specific user.
+     *
+     * @bodyParam name string The user's name.
+     * @bodyParam email string The user's email.
+     * @bodyParam password string The user's password.
+     * @bodyParam confirm_password string The confirmation of the user's password.
+     */
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
@@ -58,6 +75,11 @@ class UserController extends Controller
 
         return response()->json(['user' => $user], 200);
     }
+
+    /**
+     * @group Users
+     * Delete a specific user.
+     */
     public function destroy($id)
     {
         $user = User::find($id);
@@ -69,7 +91,4 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User deleted successfully'], 200);
     }
-    
-
 }
-

@@ -9,8 +9,8 @@ use App\Http\Controllers\EmpruntController;
 use App\Http\Controllers\RetardController;
 
 
-
-Route::post('/login', [App\Http\Controllers\authController::class, 'login'])->name('auth.login');
+Route::prefix('v1')->group(function () {
+    Route::post('/login', [App\Http\Controllers\authController::class, 'login'])->name('auth.login');
 Route::post('/register', [App\Http\Controllers\authController::class, 'createUser'])->name('auth.register');
 
 
@@ -35,25 +35,37 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::middleware('can:gerer etudiants')->group(function () {
         Route::apiResource('etudiant', App\Http\Controllers\EtudiantController::class)->name('','etudiant');
+        
+    
     });
     Route::middleware('can:gerer personnels')->group(function () {
         Route::apiResource('personnel', App\Http\Controllers\PersonnelController::class)->name('','personnel');
     });
     Route::middleware('can:gerer livres')->group(function () {
         Route::apiResource('livre', App\Http\Controllers\LIVREController::class)->name('','livres');
-        Route::get('livre-by-genre/{genre}', [App\Http\Controllers\LIVREController::class, 'getLivresByGenre'])->name('livre.by.genre');
-        Route::get('livre-by-author/{author}', [App\Http\Controllers\LIVREController::class, 'getLivresByAuthor'])->name('livre.by.author');
-        Route::get('search-livre/{query}', [App\Http\Controllers\LIVREController::class, 'searchLivres'])->name('livre.search');
+        Route::prefix('livres')->group(function () {
+        Route::get('genres', [App\Http\Controllers\LIVREController::class, 'getGenresList'])->name('livre.genres.list');
+        Route::get('authors', [App\Http\Controllers\LIVREController::class, 'getAuthorsList'])->name('livre.authors.list');
+        Route::get('editions', [App\Http\Controllers\LIVREController::class, 'getEditionsList'])->name('livre.editions.list');
+  });
     });
     Route::middleware('can:gerer les emprunts, gerer  les details emprunts')->group(function () {
         Route::apiResource('emprunt', App\Http\Controllers\EmpruntController::class);
-        Route::get('emprunt-by-etudiant/{etudiant}', [App\Http\Controllers\EmpruntController::class, 'getEmpruntsByEtudiant'])->name('emprunt.by.etudiant');
-        Route::get('emprunt-by-livre/{livre}', [App\Http\Controllers\EmpruntController::class, 'getEmpruntsByLivre'])->name('emprunt.by.livre');
-        Route::get('emprunt-by-date/{date}', [App\Http\Controllers\EmpruntController::class, 'getEmpruntsByDate'])->name('emprunt.by.date');
     });
     Route::middleware('can:gerer les retards')->group(function () {
         Route::apiResource('retard', App\Http\Controllers\RetardController::class);
-        Route::get('retard-by-etudiant/{etudiant}', [App\Http\Controllers\RetardController::class, 'getRetardsByEtudiant'])->name('retard.by.etudiant');
-        Route::get('retard-by-date/{date}', [App\Http\Controllers\RetardController::class, 'getRetardsByDate'])->name('retard.by.date');
+    });
+    Route::middleware('can:gerer users')->group(function () {
+        Route::prefix('analytics')->group(function () {
+            Route::get('/livres/count', [App\Http\Controllers\AnalyticsController::class, 'getLivresStats'])->name('analytics.livres');
+            Route::get('/emprunts/count', [App\Http\Controllers\AnalyticsController::class, 'getEmpruntsStats'])->name('analytics.emprunts');
+            Route::get('/retards/count', [App\Http\Controllers\AnalyticsController::class, 'getRetardsStats'])->name('analytics.retards');
+            Route::get('/livres/top', [App\Http\Controllers\AnalyticsController::class, 'get'])->name('analytics.livres.top');
+            Route::get('/emprunts/top', [App\Http\Controllers\AnalyticsController::class, 'getFrequentEmprunteurs'])->name('analytics.emprunts.top');
+            Route::get('/retards/top', [App\Http\Controllers\AnalyticsController::class, 'getTopRetardsStats'])->name('analytics.retards.top');
+
+        });
+    });
     });
 });
+

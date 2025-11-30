@@ -10,10 +10,18 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    /**
+     * @group Roles
+     * Get a list of roles and permissions.
+     */
     public function index()
     {
        return response()->json(['roles' => Role::all(),'permissions' => Permission::all()], 200);
     }
+    /**
+     * @group Roles
+     * Get a specific role.
+     */
     public function show($id)
     {
         $role = Role::find($id);
@@ -23,6 +31,12 @@ class RoleController extends Controller
         return response()->json(['role' => $role], 200);
     }
 
+    /**
+     * @group Roles
+     * Assign roles to users.
+     * @bodyParam user_id int required The ID of the user.
+     * @bodyParam role_id int required The ID of the role.
+     */
     public function assignRoles(Request $request)
     {
         // Logic to assign roles to users
@@ -89,7 +103,12 @@ class RoleController extends Controller
             return response()->json(['error' => 'Failed to assign roles: ' . $e->getMessage()], 500);
         }
     }
-
+    /**
+     * @group Roles
+     * Revoke roles from users.
+     * @bodyParam user_id int required The ID of the user.
+     * @bodyParam role_id int required The ID of the role.
+     */
     public function revokeRoles(Request $request)
     {
         // Logic to revoke roles from users
@@ -153,7 +172,12 @@ class RoleController extends Controller
 
         return response()->json(['message' => 'Roles revoked successfully'], 200);
     }
-
+    /**
+     * @group Roles
+     * Assign permissions to roles.
+     * @bodyParam role_id int required The ID of the role.
+     * @bodyParam permissions_id  required The IDs of the permissions.
+     */
     public function assignPermissions(Request $request)
     {
         // Logic to assign permissions to users
@@ -172,7 +196,12 @@ class RoleController extends Controller
 
         return response()->json(['message' => 'Permissions assigned successfully'], 200);
     }
-
+    /**
+     * @group Roles
+     * Revoke permissions from roles.
+     * @bodyParam role_id int required The ID of the role.
+     * @bodyParam permissions_id  required The IDs of the permissions.
+     */
     public function revokePermissions(Request $request)
     {
         // Logic to revoke permissions from users
@@ -190,11 +219,19 @@ class RoleController extends Controller
 
         return response()->json(['message' => 'Permissions revoked successfully'], 200);
     }
+    /**
+     * @group Roles
+     * Get all roles.
+     */
     public function getALLRoles()
     {
         $roles = Role::all();
         return response()->json(['roles' => $roles], 200);
     }
+    /**
+     * @group Roles
+     * Get all permissions.
+     */
     public function getALLPermissions()
     {
         $permissions = Permission::all();

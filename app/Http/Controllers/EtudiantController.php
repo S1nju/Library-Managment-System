@@ -11,9 +11,21 @@ class EtudiantController extends Controller
      * @group Etudiants
      * Get a list of etudiants.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(ETUDIANT::all(), 200);
+        $search = $request->query('search');
+        $query = ETUDIANT::query();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('nom', 'like', "%{$search}%")
+                  ->orWhere('prenom', 'like', "%{$search}%")
+                  ->orWhere('filiere', 'like', "%{$search}%")
+                  ->orWhere('niveau', 'like', "%{$search}%");
+            });
+        }
+
+        return response()->json($query->paginate(10), 200);
     }
      /**
      * @group Etudiants
