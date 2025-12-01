@@ -61,10 +61,10 @@ class RoleController extends Controller
                 }
                 switch ($permission_name) {
                     case 'gerer users':
-                        $permission_name = 'etudiants';
+                        $permission_name = 'users';
                         break;
                     case 'gerer etudiants':
-                        $permission_name = '';
+                        $permission_name = 'etudiants';
                         break;
                     case 'gerer personnels':
                         $permission_name = 'personnels';
@@ -131,10 +131,10 @@ class RoleController extends Controller
                 }
                 switch ($permission_name) {
                     case 'gerer users':
-                        $permission_name = 'etudiants';
+                        $permission_name = 'users';
                         break;
                     case 'gerer etudiants':
-                        $permission_name = '';
+                        $permission_name = 'etudiants';
                         break;
                     case 'gerer personnels':
                         $permission_name = 'personnels';
@@ -155,6 +155,7 @@ class RoleController extends Controller
                         // Handle unknown permission
                         continue 2; // Skip to the next permission
                 }
+            
                 DB::connection('oracle_sysdba')->statement("REVOKE SELECT ON amine." . $permission_name . " FROM "   . User::find($validatedData['user_id'])->name);
                 DB::connection('oracle_sysdba')->statement("REVOKE INSERT ON amine." . $permission_name . " FROM "  . User::find($validatedData['user_id'])->name);
                 DB::connection('oracle_sysdba')->statement("REVOKE UPDATE ON amine." . $permission_name . " FROM "  . User::find($validatedData['user_id'])->name);

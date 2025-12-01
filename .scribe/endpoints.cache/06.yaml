@@ -7,7 +7,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/emprunt
+    uri: api/v1/emprunt
     metadata:
       custom: []
       groupName: Emprunts
@@ -71,7 +71,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/emprunt
+    uri: api/v1/emprunt
     metadata:
       custom: []
       groupName: Emprunts
@@ -173,7 +173,7 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/emprunt/{id}'
+    uri: 'api/v1/emprunt/{id}'
     metadata:
       custom: []
       groupName: Emprunts

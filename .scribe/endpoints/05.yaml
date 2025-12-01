@@ -5,14 +5,23 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/livre
+    uri: api/v1/livre
     metadata:
       custom: []
       groupName: Livres
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get a list of livres.'
+      title: |-
+        Get a list of livres.
+        You can filter by genre, author, or search term using query parameters:
+        - genre: Filter livres by genre.
+        - author: Filter livres by author.
+        - search: Search livres by title, author, or genre.
+        - annee: Filter livres by publication year.
+        - isbn: Filter livres by ISBN.
+        - status: Filter livres by availability status ('enStock' or 'epuise').
+        - sort_by_date: Sort livres by publication date ('recent' or 'oldest').
       description: ''
       authenticated: false
       deprecated: false
@@ -45,7 +54,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/livre
+    uri: api/v1/livre
     metadata:
       custom: []
       groupName: Livres
@@ -148,7 +157,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/livre/{id}'
+    uri: 'api/v1/livre/{id}'
     metadata:
       custom: []
       groupName: Livres
@@ -201,7 +210,7 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/livre/{id}'
+    uri: 'api/v1/livre/{id}'
     metadata:
       custom: []
       groupName: Livres
@@ -316,7 +325,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/livre/{id}'
+    uri: 'api/v1/livre/{id}'
     metadata:
       custom: []
       groupName: Livres

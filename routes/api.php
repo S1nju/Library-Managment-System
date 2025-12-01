@@ -11,7 +11,7 @@ use App\Http\Controllers\RetardController;
 
 Route::prefix('v1')->group(function () {
     Route::post('/login', [App\Http\Controllers\authController::class, 'login'])->name('auth.login');
-Route::post('/register', [App\Http\Controllers\authController::class, 'createUser'])->name('auth.register');
+    Route::post('/register', [App\Http\Controllers\authController::class, 'createUser'])->name('auth.register');
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('can:gerer users')->group(function () {
         Route::apiResource('user', App\Http\Controllers\UserController::class);
         Route::prefix('roles')->group(function () {
-            Route::apiResource('/', App\Http\Controllers\RoleController::class)->name('','roles');
+            Route::apiResource('/', App\Http\Controllers\RoleController::class)->except(['create', 'edit'])->name('','roles');
             Route::post('assign-roles', [App\Http\Controllers\RoleController::class, 'assignRoles'])->name('roles.assign');
             Route::delete('revoke-roles', [App\Http\Controllers\RoleController::class, 'revokeRoles'])->name('roles.revoke');
             Route::post('assign-permissions', [App\Http\Controllers\RoleController::class, 'assignPermissions'])->name('roles.permissions.assign');
@@ -57,12 +57,12 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::middleware('can:gerer users')->group(function () {
         Route::prefix('analytics')->group(function () {
-            Route::get('/livres/count', [App\Http\Controllers\AnalyticsController::class, 'getLivresStats'])->name('analytics.livres');
-            Route::get('/emprunts/count', [App\Http\Controllers\AnalyticsController::class, 'getEmpruntsStats'])->name('analytics.emprunts');
-            Route::get('/retards/count', [App\Http\Controllers\AnalyticsController::class, 'getRetardsStats'])->name('analytics.retards');
-            Route::get('/livres/top', [App\Http\Controllers\AnalyticsController::class, 'get'])->name('analytics.livres.top');
+            Route::get('/livres/count', [App\Http\Controllers\AnalyticsController::class, 'getLivresCount'])->name('analytics.livres');
+            Route::get('/emprunts/count', [App\Http\Controllers\AnalyticsController::class, 'getEmpruntsCount'])->name('analytics.emprunts');
+            Route::get('/retards/count', [App\Http\Controllers\AnalyticsController::class, 'getRetardsCount'])->name('analytics.retards');
+            Route::get('/livres/top', [App\Http\Controllers\AnalyticsController::class, 'getFrequentLivres'])->name('analytics.livres.top');
             Route::get('/emprunts/top', [App\Http\Controllers\AnalyticsController::class, 'getFrequentEmprunteurs'])->name('analytics.emprunts.top');
-            Route::get('/retards/top', [App\Http\Controllers\AnalyticsController::class, 'getTopRetardsStats'])->name('analytics.retards.top');
+            Route::get('/retards/top', [App\Http\Controllers\AnalyticsController::class, 'getRetardsEmprunteurs'])->name('analytics.retards.top');
 
         });
     });

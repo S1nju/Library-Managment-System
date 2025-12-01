@@ -7,7 +7,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/roles
+    uri: api/v1/roles
     metadata:
       custom: []
       groupName: Roles
@@ -47,7 +47,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/roles/{}'
+    uri: 'api/v1/roles/{}'
     metadata:
       custom: []
       groupName: Roles
@@ -86,7 +86,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "The route api/roles/architecto could not be found."
+              "message": "The route api/v1/roles/architecto could not be found."
           }
         headers:
           cache-control: 'no-cache, private'
@@ -102,7 +102,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/roles/assign-roles
+    uri: api/v1/roles/assign-roles
     metadata:
       custom: []
       groupName: Roles
@@ -157,7 +157,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: api/roles/revoke-roles
+    uri: api/v1/roles/revoke-roles
     metadata:
       custom: []
       groupName: Roles
@@ -212,7 +212,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/roles/assign-permissions
+    uri: api/v1/roles/assign-permissions
     metadata:
       custom: []
       groupName: Roles
@@ -267,7 +267,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: api/roles/revoke-permissions
+    uri: api/v1/roles/revoke-permissions
     metadata:
       custom: []
       groupName: Roles
@@ -345,7 +345,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/roles/roles
+    uri: api/v1/roles/roles
     metadata:
       custom: []
       groupName: Roles
@@ -385,7 +385,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/roles/permissions
+    uri: api/v1/roles/permissions
     metadata:
       custom: []
       groupName: Roles

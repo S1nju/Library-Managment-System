@@ -21,7 +21,7 @@ class AnalyticsController extends Controller
         $count = EMPRUNT::count();
         return response()->json(['count' => $count], 200);
     }
-    public function getTopEmpruntedLivres()
+    public function getFrequentLivres()
     {
         $topLivres_IDS = DETAIL_EMPRUNT::select('livre_id', DB::raw('count(*) as total'))
             ->groupBy('livre_id')
@@ -61,8 +61,9 @@ class AnalyticsController extends Controller
     {
         $topEtudiants = DB::table('emprunts')
             ->join('retards', 'emprunts.id', '=', 'retards.emprunt_id')
-            ->select('emprunts.etudiant_id', DB::raw('count(*) as total'))
-            ->groupBy('emprunts.etudiant_id')
+            ->join('etudiants', 'emprunts.etudiant_id', '=', 'etudiants.id')
+            ->select('etudiants.id', 'etudiants.nom', DB::raw('count(*) as total'))
+            ->groupBy('etudiants.id', 'etudiants.nom')
             ->orderBy('total', 'desc')
             ->take(10)
             ->get();

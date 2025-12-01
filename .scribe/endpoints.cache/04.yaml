@@ -7,7 +7,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/etudiant
+    uri: api/v1/etudiant
     metadata:
       custom: []
       groupName: Etudiants
@@ -47,7 +47,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/etudiant
+    uri: api/v1/etudiant
     metadata:
       custom: []
       groupName: Etudiants
@@ -126,7 +126,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/etudiant/{id}'
+    uri: 'api/v1/etudiant/{id}'
     metadata:
       custom: []
       groupName: Etudiants
@@ -179,7 +179,7 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/etudiant/{id}'
+    uri: 'api/v1/etudiant/{id}'
     metadata:
       custom: []
       groupName: Etudiants
@@ -270,7 +270,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/etudiant/{id}'
+    uri: 'api/v1/etudiant/{id}'
     metadata:
       custom: []
       groupName: Etudiants

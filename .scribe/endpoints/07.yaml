@@ -5,7 +5,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/retard
+    uri: api/v1/retard
     metadata:
       custom: []
       groupName: Retards
@@ -45,7 +45,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/retard
+    uri: api/v1/retard
     metadata:
       custom: []
       groupName: Retards
@@ -144,7 +144,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/retard/{id}'
+    uri: 'api/v1/retard/{id}'
     metadata:
       custom: []
       groupName: Retards
@@ -197,7 +197,7 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/retard/{id}'
+    uri: 'api/v1/retard/{id}'
     metadata:
       custom: []
       groupName: Retards
@@ -299,7 +299,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/retard/{id}'
+    uri: 'api/v1/retard/{id}'
     metadata:
       custom: []
       groupName: Retards

@@ -5,7 +5,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/user
+    uri: api/v1/user
     metadata:
       custom: []
       groupName: Users
@@ -45,7 +45,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/user/{id}'
+    uri: 'api/v1/user/{id}'
     metadata:
       custom: []
       groupName: Users
@@ -98,7 +98,7 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/user/{id}'
+    uri: 'api/v1/user/{id}'
     metadata:
       custom: []
       groupName: Users
@@ -189,7 +189,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/user/{id}'
+    uri: 'api/v1/user/{id}'
     metadata:
       custom: []
       groupName: Users
